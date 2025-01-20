@@ -1,42 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Webpage</title>
+    <title>Minha Página Simples</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
         }
-        header, footer {
-            width: 100%;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 10px 0;
-        }
-        footer {
-            position: absolute;
-            bottom: 0;
+
+        .content {
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>bem-vindo to Talento Tech</h1>
+        <h1>Home</h1>
     </header>
 
     <main>
-        <h2>Talento Tech te ensina desenvolvimento web</h2>
+        <div class="content">
+            Bem-Vindos ao Talento Tech
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Talento Tech</p>
+        <p>Footer - 2025</p>
     </footer>
 </body>
 </html>

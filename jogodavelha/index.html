@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        .cell.taken {
+            pointer-events: none;
+        }
+        .winner {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #28a745;
+        }
+        .restart {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .restart:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="game" id="game"></div>
+        <div class="winner" id="winner"></div>
+        <button class="restart" onclick="restartGame()">Reiniciar</button>
+    </div>
+
+    <script>
+        const gameContainer = document.getElementById('game');
+        const winnerDisplay = document.getElementById('winner');
+        let currentPlayer = 'X';
+        let board = Array(9).fill(null);
+
+        function createBoard() {
+            board.forEach((_, index) => {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.addEventListener('click', () => makeMove(index, cell));
+                gameContainer.appendChild(cell);
+            });
+        }
+
+        function makeMove(index, cell) {
+            if (!board[index]) {
+                board[index] = currentPlayer;
+                cell.textContent = currentPlayer;
+                cell.classList.add('taken');
+
+                if (checkWinner()) {
+                    winnerDisplay.textContent = `Jogador ${currentPlayer} venceu!`;
+                    gameContainer.childNodes.forEach(c => c.classList.add('taken'));
+                } else if (board.every(cell => cell)) {
+                    winnerDisplay.textContent = 'Empate!';
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+
+        function checkWinner() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                [0, 4, 8], [2, 4, 6]            
+            ];
+
+            return winningCombinations.some(combination => {
+                const [a, b, c] = combination;
+                return board[a] && board[a] === board[b] && board[a] === board[c];
+            });
+        }
+
+        function restartGame() {
+            board = Array(9).fill(null);
+            currentPlayer = 'X';
+            gameContainer.innerHTML = '';
+            winnerDisplay.textContent = '';
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
